@@ -16,7 +16,6 @@
 package com.squareup.sample.textinput
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.material.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,31 +23,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import com.squareup.sample.textinput.TextInputWorkflow.Rendering
 import com.squareup.workflow.ui.compose.composedViewFactory
 import com.squareup.workflow.ui.compose.tooling.preview
 
-@OptIn(ExperimentalFocus::class)
 val TextInputViewFactory = composedViewFactory<Rendering> { rendering, _ ->
   Column(
-    modifier = Modifier
-      .fillMaxSize()
-      .wrapContentSize()
-      .animateContentSize(clip = false),
-    horizontalAlignment = Alignment.CenterHorizontally
+      modifier = Modifier
+          .fillMaxSize()
+          .wrapContentSize()
+          .animateContentSize(clip = false),
+      horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Text(text = rendering.text)
     OutlinedTextField(
-      label = {},
-      placeholder = { Text("Enter some text") },
-      value = rendering.text,
-      onValueChange = rendering.onTextChanged
+        label = {},
+        placeholder = { Text("Enter some text") },
+        value = rendering.text,
+        onValueChange = rendering.onTextChanged
     )
     Spacer(modifier = Modifier.height(8.dp))
     Button(onClick = rendering.onSwapText) {
@@ -60,8 +58,8 @@ val TextInputViewFactory = composedViewFactory<Rendering> { rendering, _ ->
 @Preview(showBackground = true)
 @Composable private fun TextInputViewFactoryPreview() {
   TextInputViewFactory.preview(Rendering(
-    text = "Hello world",
-    onTextChanged = {},
-    onSwapText = {}
+      text = "Hello world",
+      onTextChanged = {},
+      onSwapText = {}
   ))
 }

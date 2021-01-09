@@ -19,18 +19,18 @@ import java.util.Locale.US
 import kotlin.reflect.full.declaredMembers
 
 object Versions {
-  const val compose = "1.0.0-alpha07"
-  const val kotlin = "1.4.10"
+  const val compose = "1.0.0-alpha09"
+  const val kotlin = "1.4.21"
 
   // This *is* actually used.
   @Suppress("unused")
   const val targetSdk = 29
-  const val workflow = "0.28.0"
+  const val workflow = "1.0.0-alpha.8"
 }
 
 @Suppress("unused")
 object Dependencies {
-  const val android_gradle_plugin = "com.android.tools.build:gradle:4.2.0-alpha15"
+  const val android_gradle_plugin = "com.android.tools.build:gradle:7.0.0-alpha04"
 
   object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.1.0"
@@ -42,8 +42,8 @@ object Dependencies {
     const val material = "androidx.compose.material:material:${Versions.compose}"
     const val savedstate =
       "androidx.compose.runtime:runtime-saved-instance-state:${Versions.compose}"
-    const val test = "androidx.ui:ui-test:${Versions.compose}"
-    const val tooling = "androidx.ui:ui-tooling:${Versions.compose}"
+    const val test = "androidx.compose.ui:ui-test:${Versions.compose}"
+    const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
   }
 
   const val timber = "com.jakewharton.timber:timber:4.7.1"
@@ -78,11 +78,11 @@ object Dependencies {
   }
 
   object Workflow {
-    const val core = "com.squareup.workflow:workflow-core-jvm:${Versions.workflow}"
-    const val runtime = "com.squareup.workflow:workflow-runtime-jvm:${Versions.workflow}"
+    const val core = "com.squareup.workflow1:workflow-core-jvm:${Versions.workflow}"
+    const val runtime = "com.squareup.workflow1:workflow-runtime-jvm:${Versions.workflow}"
 
     object UI {
-      const val coreAndroid = "com.squareup.workflow:workflow-ui-core-android:${Versions.workflow}"
+      const val coreAndroid = "com.squareup.workflow1:workflow-ui-core-android:${Versions.workflow}"
     }
   }
 }
@@ -99,8 +99,8 @@ object Dependencies {
 @JvmName("get")
 fun getDependencyFromGroovy(path: String): String = try {
   Dependencies.resolveObject(
-    path.toLowerCase(US)
-      .split(".")
+      path.toLowerCase(US)
+          .split(".")
   )
 } catch (e: Throwable) {
   throw IllegalArgumentException("Error resolving dependency: $path", e)

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:OptIn(WorkflowUiExperimentalApi::class)
 // See https://youtrack.jetbrains.com/issue/KT-31734
 @file:Suppress("RemoveEmptyParenthesesFromAnnotationEntry")
 
@@ -26,10 +27,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.setContent
-import com.squareup.workflow.ui.ViewEnvironment
-import com.squareup.workflow.ui.ViewFactory
-import com.squareup.workflow.ui.bindShowRendering
+import com.squareup.workflow1.ui.ViewEnvironment
+import com.squareup.workflow1.ui.ViewFactory
+import com.squareup.workflow1.ui.bindShowRendering
 import com.squareup.workflow.ui.compose.internal.ParentComposition
+import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 import kotlin.reflect.KClass
 
 /**
@@ -59,8 +61,8 @@ import kotlin.reflect.KClass
  * Workflows can render other workflows, and renderings from one workflow can contain renderings
  * from other workflows. These renderings may all be bound to their own [ViewFactory]s. Regular
  * [ViewFactory]s and `LayoutRunner`s use
- * [WorkflowViewStub][com.squareup.workflow.ui.WorkflowViewStub] to recursively show nested
- * renderings using the [ViewRegistry][com.squareup.workflow.ui.ViewRegistry].
+ * [WorkflowViewStub][com.squareup.workflow1.ui.WorkflowViewStub] to recursively show nested
+ * renderings using the [ViewRegistry][com.squareup.workflow1.ui.ViewRegistry].
  *
  * View factories defined using this function may also show nested renderings. Doing so is as simple
  * as calling [WorkflowRendering] and passing in the nested rendering. See the kdoc on that function
@@ -85,10 +87,9 @@ inline fun <reified RenderingT : Any> composedViewFactory(
   ) -> Unit
 ): ViewFactory<RenderingT> = ComposeViewFactory(RenderingT::class, showRendering)
 
-@PublishedApi
-internal class ComposeViewFactory<RenderingT : Any>(
+class ComposeViewFactory<RenderingT : Any>(
   override val type: KClass<RenderingT>,
-  internal val content: @Composable (RenderingT, ViewEnvironment) -> Unit
+  val content: @Composable (RenderingT, ViewEnvironment) -> Unit
 ) : ViewFactory<RenderingT> {
 
   @OptIn(ExperimentalComposeApi::class)
@@ -108,8 +109,8 @@ internal class ComposeViewFactory<RenderingT : Any>(
 
       val state = mutableStateOf(Pair(initialRendering, initialViewEnvironment))
       composeContainer.bindShowRendering(
-        initialRendering,
-        initialViewEnvironment
+          initialRendering,
+          initialViewEnvironment
       ) { rendering, environment ->
         state.value = Pair(rendering, environment)
       }
@@ -126,8 +127,8 @@ internal class ComposeViewFactory<RenderingT : Any>(
       // Update the state whenever a new rendering is emitted.
       // This lambda will be executed synchronously before bindShowRendering returns.
       composeContainer.bindShowRendering(
-        initialRendering,
-        initialViewEnvironment
+          initialRendering,
+          initialViewEnvironment
       ) { rendering, environment ->
         // Entry point to the world of Compose.
         composeContainer.setContent(parentComposition) {

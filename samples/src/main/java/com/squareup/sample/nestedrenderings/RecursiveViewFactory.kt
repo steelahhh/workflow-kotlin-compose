@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:OptIn(WorkflowUiExperimentalApi::class)
 @file:Suppress("RemoveEmptyParenthesesFromAnnotationEntry")
 
 package com.squareup.sample.nestedrenderings
 
-import androidx.compose.material.Text
 import androidx.compose.foundation.layout.Arrangement.SpaceEvenly
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayout
@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
@@ -37,13 +38,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.res.dimensionResource
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import com.squareup.sample.R
 import com.squareup.sample.nestedrenderings.RecursiveWorkflow.Rendering
-import com.squareup.workflow.ui.ViewEnvironment
 import com.squareup.workflow.ui.compose.WorkflowRendering
 import com.squareup.workflow.ui.compose.composedViewFactory
 import com.squareup.workflow.ui.compose.tooling.preview
+import com.squareup.workflow1.ui.ViewEnvironment
+import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 
 /**
  * Ambient of [Color] to use as the background color for a [RecursiveViewFactory].
@@ -58,25 +60,25 @@ val RecursiveViewFactory = composedViewFactory<Rendering> { rendering, viewEnvir
   val color = BackgroundColorAmbient.current
   val childColor = remember(color) {
     color.copy(alpha = .9f)
-      .compositeOver(Color.Black)
+        .compositeOver(Color.Black)
   }
 
   Card(backgroundColor = color) {
     Column(
-      Modifier.padding(dimensionResource(R.dimen.recursive_padding))
-        .fillMaxSize(),
-      horizontalAlignment = CenterHorizontally
+        Modifier.padding(dimensionResource(R.dimen.recursive_padding))
+            .fillMaxSize(),
+        horizontalAlignment = CenterHorizontally
     ) {
       Providers(BackgroundColorAmbient provides childColor) {
         Children(
-          rendering.children, viewEnvironment,
-          // Pass a weight so that the column fills all the space not occupied by the buttons.
-          modifier = Modifier.weight(1f, fill = true)
+            rendering.children, viewEnvironment,
+            // Pass a weight so that the column fills all the space not occupied by the buttons.
+            modifier = Modifier.weight(1f, fill = true)
         )
       }
       Buttons(
-        onAdd = rendering.onAddChildClicked,
-        onReset = rendering.onResetClicked
+          onAdd = rendering.onAddChildClicked,
+          onReset = rendering.onResetClicked
       )
     }
   }
@@ -86,16 +88,16 @@ val RecursiveViewFactory = composedViewFactory<Rendering> { rendering, viewEnvir
 @Composable fun RecursiveViewFactoryPreview() {
   Providers(BackgroundColorAmbient provides Color.Green) {
     RecursiveViewFactory.preview(
-      Rendering(
-        children = listOf(
-          "foo",
-          Rendering(
-            children = listOf("bar"),
-            onAddChildClicked = {}, onResetClicked = {}
-          )
-        ), onAddChildClicked = {}, onResetClicked = {}
-      ),
-      placeholderModifier = Modifier.fillMaxSize()
+        Rendering(
+            children = listOf(
+                "foo",
+                Rendering(
+                    children = listOf("bar"),
+                    onAddChildClicked = {}, onResetClicked = {}
+                )
+            ), onAddChildClicked = {}, onResetClicked = {}
+        ),
+        placeholderModifier = Modifier.fillMaxSize()
     )
   }
 }
@@ -106,18 +108,18 @@ val RecursiveViewFactory = composedViewFactory<Rendering> { rendering, viewEnvir
   modifier: Modifier
 ) {
   Column(
-    modifier = modifier,
-    verticalArrangement = SpaceEvenly,
-    horizontalAlignment = CenterHorizontally
+      modifier = modifier,
+      verticalArrangement = SpaceEvenly,
+      horizontalAlignment = CenterHorizontally
   ) {
     children.forEach { childRendering ->
       WorkflowRendering(
-        childRendering,
-        // Pass a weight so all children are partitioned evenly within the total column space.
-        // Without the weight, each child is the full size of the parent.
-        viewEnvironment,
-        modifier = Modifier.weight(1f, true)
-          .padding(dimensionResource(R.dimen.recursive_padding))
+          childRendering,
+          // Pass a weight so all children are partitioned evenly within the total column space.
+          // Without the weight, each child is the full size of the parent.
+          viewEnvironment,
+          modifier = Modifier.weight(1f, true)
+              .padding(dimensionResource(R.dimen.recursive_padding))
       )
     }
   }
@@ -130,9 +132,9 @@ val RecursiveViewFactory = composedViewFactory<Rendering> { rendering, viewEnvir
 ) {
   // Use a FlowRow so the buttons will wrap when the parent is too narrow.
   FlowRow(
-    mainAxisSize = Expand,
-    mainAxisAlignment = MainAxisAlignment.SpaceEvenly,
-    crossAxisSpacing = dimensionResource(R.dimen.recursive_padding)
+      mainAxisSize = Expand,
+      mainAxisAlignment = MainAxisAlignment.SpaceEvenly,
+      crossAxisSpacing = dimensionResource(R.dimen.recursive_padding)
   ) {
     Button(onClick = onAdd) {
       Text("Add Child")

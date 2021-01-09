@@ -28,10 +28,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.ui.test.createComposeRule
-import androidx.ui.tooling.preview.Preview
-import com.squareup.workflow.ui.ViewEnvironmentKey
-import com.squareup.workflow.ui.compose.WorkflowRendering
-import com.squareup.workflow.ui.compose.composedViewFactory
+import androidx.compose.ui.tooling.preview.Preview
+import com.squareup.workflow1.ui.ViewEnvironmentKey
+import com.squareup.workflow1.ui.compose.WorkflowRendering
+import com.squareup.workflow1.ui.compose.composedViewFactory
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -139,27 +139,27 @@ class PreviewViewFactoryTest {
 
   @Preview @Composable private fun ParentRecursivePreview() {
     ParentRecursive.preview(
-      RecursiveRendering(
-        text = "one",
-        child = RecursiveRendering(
-          text = "two",
-          child = RecursiveRendering(text = "three")
+        RecursiveRendering(
+            text = "one",
+            child = RecursiveRendering(
+                text = "two",
+                child = RecursiveRendering(text = "three")
+            )
         )
-      )
     )
   }
 
   @Preview @Composable private fun ParentWithModifier() {
     ParentWithOneChild.preview(
-      Pair("one", "two"),
-      modifier = Modifier.size(0.dp)
+        Pair("one", "two"),
+        modifier = Modifier.size(0.dp)
     )
   }
 
   @Preview @Composable private fun ParentWithPlaceholderModifier() {
     ParentWithOneChild.preview(
-      Pair("one", "two"),
-      placeholderModifier = Modifier.size(0.dp)
+        Pair("one", "two"),
+        placeholderModifier = Modifier.size(0.dp)
     )
   }
 

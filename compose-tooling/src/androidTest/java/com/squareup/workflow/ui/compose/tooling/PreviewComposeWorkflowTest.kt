@@ -28,17 +28,17 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.ui.test.createComposeRule
-import androidx.ui.tooling.preview.Preview
-import com.squareup.workflow.Workflow
-import com.squareup.workflow.ui.ViewEnvironmentKey
-import com.squareup.workflow.ui.compose.WorkflowRendering
-import com.squareup.workflow.ui.compose.composed
+import androidx.compose.ui.tooling.preview.Preview
+import com.squareup.workflow1.Workflow
+import com.squareup.workflow1.ui.ViewEnvironmentKey
+import com.squareup.workflow1.ui.compose.WorkflowRendering
+import com.squareup.workflow1.ui.compose.composed
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Duplicate of [PreviewViewFactoryTest] but for [com.squareup.workflow.ui.compose.ComposeWorkflow].
+ * Duplicate of [PreviewViewFactoryTest] but for [com.squareup.workflow1.ui.compose.ComposeWorkflow].
  */
 @RunWith(AndroidJUnit4::class)
 class PreviewComposeWorkflowTest {
@@ -119,15 +119,15 @@ class PreviewComposeWorkflowTest {
 
   @Preview @Composable private fun ParentWithModifier() {
     ParentWithOneChild.preview(
-      Pair("one", "two"),
-      modifier = Modifier.size(0.dp)
+        Pair("one", "two"),
+        modifier = Modifier.size(0.dp)
     )
   }
 
   @Preview @Composable private fun ParentWithPlaceholderModifier() {
     ParentWithOneChild.preview(
-      Pair("one", "two"),
-      placeholderModifier = Modifier.size(0.dp)
+        Pair("one", "two"),
+        placeholderModifier = Modifier.size(0.dp)
     )
   }
 

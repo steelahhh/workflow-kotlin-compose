@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:OptIn(WorkflowUiExperimentalApi::class)
+
 package com.squareup.sample.nestedrenderings
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import com.squareup.sample.databinding.LegacyViewBinding
 import com.squareup.sample.nestedrenderings.RecursiveWorkflow.LegacyRendering
-import com.squareup.workflow.ui.LayoutRunner
-import com.squareup.workflow.ui.LayoutRunner.Companion.bind
-import com.squareup.workflow.ui.ViewEnvironment
-import com.squareup.workflow.ui.ViewFactory
 import com.squareup.workflow.ui.compose.tooling.preview
+import com.squareup.workflow1.ui.LayoutRunner
+import com.squareup.workflow1.ui.LayoutRunner.Companion.bind
+import com.squareup.workflow1.ui.ViewEnvironment
+import com.squareup.workflow1.ui.ViewFactory
+import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 
 /**
  * A [LayoutRunner] that renders [LegacyRendering]s using the legacy view framework.
@@ -40,14 +43,14 @@ class LegacyRunner(private val binding: LegacyViewBinding) : LayoutRunner<Legacy
   }
 
   companion object : ViewFactory<LegacyRendering> by bind(
-    LegacyViewBinding::inflate, ::LegacyRunner
+      LegacyViewBinding::inflate, ::LegacyRunner
   )
 }
 
 @Preview(widthDp = 200, heightDp = 150, showBackground = true)
 @Composable private fun LegacyRunnerPreview() {
   LegacyRunner.preview(
-    rendering = LegacyRendering("child"),
-    placeholderModifier = Modifier.fillMaxSize()
+      rendering = LegacyRendering("child"),
+      placeholderModifier = Modifier.fillMaxSize()
   )
 }

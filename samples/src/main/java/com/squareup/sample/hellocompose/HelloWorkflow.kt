@@ -19,11 +19,11 @@ import com.squareup.sample.hellocompose.HelloWorkflow.Rendering
 import com.squareup.sample.hellocompose.HelloWorkflow.State
 import com.squareup.sample.hellocompose.HelloWorkflow.State.Goodbye
 import com.squareup.sample.hellocompose.HelloWorkflow.State.Hello
-import com.squareup.workflow.RenderContext
-import com.squareup.workflow.Snapshot
-import com.squareup.workflow.StatefulWorkflow
-import com.squareup.workflow.action
-import com.squareup.workflow.parse
+import com.squareup.workflow1.BaseRenderContext
+import com.squareup.workflow1.Snapshot
+import com.squareup.workflow1.StatefulWorkflow
+import com.squareup.workflow1.action
+import com.squareup.workflow1.parse
 
 object HelloWorkflow : StatefulWorkflow<Unit, State, Nothing, Rendering>() {
   enum class State {
@@ -42,23 +42,34 @@ object HelloWorkflow : StatefulWorkflow<Unit, State, Nothing, Rendering>() {
   )
 
   private val helloAction = action {
-    nextState = nextState.theOtherState()
+    state = state.theOtherState()
   }
 
   override fun initialState(
     props: Unit,
     snapshot: Snapshot?
   ): State = snapshot?.bytes?.parse { source -> if (source.readInt() == 1) Hello else Goodbye }
-    ?: Hello
+      ?: Hello
 
   override fun render(
     props: Unit,
     state: State,
-    context: RenderContext<State, Nothing>
-  ): Rendering = Rendering(
-    message = state.name,
-    onClick = { context.actionSink.send(helloAction) }
-  )
+    context: RenderContext
+  ): Rendering {
+    // TODO This currently causes an IR generation error. I think this is fixed in 1.4.20, but can't
+    // build with that until compose supports it. If fixed, inline doRender.
+    return doRender(state, context)
+  }
+
+  private fun doRender(
+    state: State,
+    context: BaseRenderContext<Unit, State, Nothing>
+  ): Rendering {
+    return Rendering(
+        message = state.name,
+        onClick = { context.actionSink.send(helloAction) }
+    )
+  }
 
   override fun snapshotState(state: State): Snapshot = Snapshot.of(if (state == Hello) 1 else 0)
 }
