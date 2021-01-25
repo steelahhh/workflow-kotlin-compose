@@ -72,7 +72,7 @@ import com.squareup.workflow1.ui.plus
 
   val rendering = workflow.renderAsState(props, onOutput, interceptors)
   rendering.value?.let {
-    WorkflowRendering(it, realEnvironment, modifier)
+    WorkflowRendering(rendering.value, realEnvironment, modifier)
   }
 }
 

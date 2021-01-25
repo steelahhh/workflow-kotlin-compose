@@ -19,13 +19,13 @@ import java.util.Locale.US
 import kotlin.reflect.full.declaredMembers
 
 object Versions {
-  const val compose = "1.0.0-alpha09"
+  const val compose = "1.0.0-alpha10"
   const val kotlin = "1.4.21"
 
   // This *is* actually used.
   @Suppress("unused")
-  const val targetSdk = 29
-  const val workflow = "1.0.0-alpha.8"
+  const val targetSdk = 30
+  const val workflow = "1.0.0-alpha.9"
 }
 
 @Suppress("unused")
