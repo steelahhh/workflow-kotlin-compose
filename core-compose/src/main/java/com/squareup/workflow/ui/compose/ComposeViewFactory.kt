@@ -26,7 +26,7 @@ import android.widget.FrameLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.platform.ComposeView
 import com.squareup.workflow1.ui.ViewEnvironment
 import com.squareup.workflow1.ui.ViewFactory
 import com.squareup.workflow1.ui.bindShowRendering
@@ -102,7 +102,7 @@ class ComposeViewFactory<RenderingT : Any>(
     // There is currently no way to automatically generate an Android View directly from a
     // Composable function, so we need to use ViewGroup.setContent.
     val parentComposition = initialViewEnvironment[ParentComposition].reference
-    val composeContainer = FrameLayout(contextForNewView)
+    val composeContainer = ComposeView(contextForNewView)
 
     if (parentComposition == null) {
       // This composition will be the "root" – it must not be recomposed.
@@ -131,7 +131,7 @@ class ComposeViewFactory<RenderingT : Any>(
           initialViewEnvironment
       ) { rendering, environment ->
         // Entry point to the world of Compose.
-        composeContainer.setContent(parentComposition) {
+        composeContainer.setContent {
           content(rendering, environment)
         }
       }

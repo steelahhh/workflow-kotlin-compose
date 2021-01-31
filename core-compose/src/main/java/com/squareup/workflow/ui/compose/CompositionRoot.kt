@@ -89,7 +89,7 @@ fun ViewRegistry.withCompositionRoot(root: CompositionRoot): ViewRegistry =
     // so far. We provide a true value for the ambient for everything below us, so any recursive
     // calls to this function will hit the if case above and not re-apply the wrapper.
     Providers(HasViewFactoryRootBeenApplied provides true) {
-      val safeRoot: CompositionRoot = remember(root) { safeCompositionRoot(root) }
+      val safeRoot: CompositionRoot = remember { safeCompositionRoot(root) }
       safeRoot(content)
     }
   }
