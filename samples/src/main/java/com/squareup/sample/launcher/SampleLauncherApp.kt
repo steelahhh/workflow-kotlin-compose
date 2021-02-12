@@ -24,18 +24,10 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.drawLayer
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.gesture.rawPressStartGestureFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -73,6 +65,7 @@ import com.squareup.sample.R.string
   SampleLauncherApp()
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable private fun SampleItem(sample: Sample) {
   val rootView = AmbientView.current
 

@@ -36,6 +36,8 @@ apply(from = rootProject.file(".buildscript/configure-compose.gradle"))
 dependencies {
   implementation(project(":core-compose"))
   implementation(Dependencies.AndroidX.appcompat)
+  implementation(Dependencies.AndroidX.activity)
+  implementation(Dependencies.AndroidX.activityCompose)
   implementation(Dependencies.Compose.layout)
   implementation(Dependencies.Compose.material)
   implementation(Dependencies.Compose.foundation)

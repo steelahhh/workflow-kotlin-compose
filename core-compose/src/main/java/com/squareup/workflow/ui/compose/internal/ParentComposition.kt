@@ -18,13 +18,13 @@
 
 package com.squareup.workflow.ui.compose.internal
 
-import androidx.compose.runtime.CompositionReference
+import androidx.compose.runtime.CompositionContext
 import com.squareup.workflow1.ui.ViewEnvironment
 import com.squareup.workflow1.ui.ViewEnvironmentKey
 import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 
 /**
- * Holds a [CompositionReference] that can be passed to [setContent] to create a composition that is
+ * Holds a [CompositionContext] that can be passed to [setContent] to create a composition that is
  * a child of another composition. Subcompositions get ambients and other compose context from their
  * parent, and propagate invalidations, which allows ambients provided around a [WorkflowRendering]
  * call to be read by nested Compose-based view factories.
@@ -34,7 +34,7 @@ import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
  * link its composition to the outer one.
  */
 internal class ParentComposition(
-  var reference: CompositionReference? = null
+  var reference: CompositionContext? = null
 ) {
   companion object : ViewEnvironmentKey<ParentComposition>(ParentComposition::class) {
     override val default: ParentComposition get() = ParentComposition()

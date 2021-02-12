@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import com.squareup.workflow1.ui.ViewEnvironment
 import com.squareup.workflow1.ui.ViewRegistry
 import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
@@ -32,7 +33,7 @@ import com.squareup.workflow.ui.compose.internal.mapFactories
 /**
  * Used by [wrapWithRootIfNecessary] to ensure the [CompositionRoot] is only applied once.
  */
-private val HasViewFactoryRootBeenApplied = staticAmbientOf { false }
+private val HasViewFactoryRootBeenApplied = staticCompositionLocalOf { false }
 
 /**
  * A `@Composable` function that will be used to wrap the first (highest-level)

@@ -36,6 +36,5 @@ dependencies {
 
   implementation(Dependencies.Compose.foundation)
   implementation(Dependencies.Compose.layout)
-  implementation(Dependencies.Compose.savedstate)
   implementation(Dependencies.Workflow.runtime)
 }

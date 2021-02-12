@@ -23,9 +23,9 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.compositionReference
-import androidx.compose.runtime.onCommit
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.node.Ref
 import androidx.compose.ui.viewinterop.AndroidView
@@ -95,7 +95,7 @@ import kotlin.properties.Delegates.observable
   // Plumb the current composition through the ViewEnvironment so any nested composable factories
   // get access to any ambients currently in effect.
   val parentComposition = remember { ParentComposition() }
-  parentComposition.reference = compositionReference()
+  parentComposition.reference = rememberCompositionContext()
   val wrappedEnvironment = remember(viewEnvironment) {
     viewEnvironment + (ParentComposition to parentComposition)
   }
@@ -110,7 +110,7 @@ import kotlin.properties.Delegates.observable
     hostViewRef.value = it
   }
 
-  onCommit {
+  LaunchedEffect(Unit) {
     hostViewRef.value?.let { hostView ->
       hostView.viewFactory = viewFactory
       hostView.update = Pair(rendering, wrappedEnvironment)

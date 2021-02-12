@@ -38,7 +38,7 @@ val TextInputViewFactory = composedViewFactory<Rendering> { rendering, _ ->
       modifier = Modifier
           .fillMaxSize()
           .wrapContentSize()
-          .animateContentSize(clip = false),
+          .animateContentSize(),
       horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Text(text = rendering.text)

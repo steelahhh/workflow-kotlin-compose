@@ -19,16 +19,10 @@
 package com.squareup.workflow.ui.compose
 
 import androidx.annotation.VisibleForTesting
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLifecycleObserver
-import androidx.compose.runtime.RememberObserver
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.savedinstancestate.Saver
-import androidx.compose.runtime.savedinstancestate.SaverScope
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.savedinstancestate.rememberSavedInstanceState
 import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.Snapshot
@@ -172,8 +166,8 @@ inline fun <RenderingT> Workflow<Unit, Nothing, RenderingT>.renderAsState(
   // val workflowScope = remember { baseScope + Dispatchers.Main.immediate }
   val workflowScope = rememberCoroutineScope()
   val outputState = rememberUpdatedState(onOutput)
-  val snapshotHolder = rememberSavedInstanceState(key = snapshotKey, saver = TreeSnapshotHolder) {
-    TreeSnapshotHolder()
+  val snapshotHolder by rememberSaveable(snapshotKey, stateSaver = TreeSnapshotHolder) {
+    mutableStateOf(TreeSnapshotHolder())
   }
 
   // We can't use onActive/on(Pre)Commit because they won't run their callback until after this
@@ -195,7 +189,7 @@ private class WorkflowState<PropsT, OutputT : Any, RenderingT>(
   private val outputState: State<(OutputT) -> Unit>,
   private val snapshotHolder: TreeSnapshotHolder,
   private val interceptors: List<WorkflowInterceptor>
-) : CompositionLifecycleObserver {
+) : RememberObserver {
 
   private val renderingState = mutableStateOf<RenderingT?>(null)
   private val propsFlow = MutableStateFlow(initialProps)
@@ -225,14 +219,26 @@ private class WorkflowState<PropsT, OutputT : Any, RenderingT>(
     propsFlow.value = props
   }
 
-  override fun onEnter() {
-    // Nothing to do.
-    println("OMG WorkflowState onEnter")
-  }
-
-  override fun onLeave() {
+  override fun onAbandoned() {
+    println("OMG WorkflowState onAbandoned")
     workflowScope.cancel()
   }
+
+  override fun onForgotten() {
+    println("OMG WorkflowState onForgotten")
+  }
+
+  override fun onRemembered() {
+    println("OMG WorkflowState onRembemered")
+  }
+
+//  override fun onEnter() {
+//    // Nothing to do.
+//  }
+//
+//  override fun onLeave() {
+//    workflowScope.cancel()
+//  }
 }
 
 private class TreeSnapshotHolder {
