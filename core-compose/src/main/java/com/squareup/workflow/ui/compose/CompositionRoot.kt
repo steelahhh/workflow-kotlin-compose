@@ -21,9 +21,8 @@ package com.squareup.workflow.ui.compose
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.squareup.workflow1.ui.ViewEnvironment
 import com.squareup.workflow1.ui.ViewRegistry
@@ -89,7 +88,7 @@ fun ViewRegistry.withCompositionRoot(root: CompositionRoot): ViewRegistry =
     // If the ambient is false, this is the first time this function has appeared in the composition
     // so far. We provide a true value for the ambient for everything below us, so any recursive
     // calls to this function will hit the if case above and not re-apply the wrapper.
-    Providers(HasViewFactoryRootBeenApplied provides true) {
+    CompositionLocalProvider(HasViewFactoryRootBeenApplied provides true) {
       val safeRoot: CompositionRoot = remember { safeCompositionRoot(root) }
       safeRoot(content)
     }

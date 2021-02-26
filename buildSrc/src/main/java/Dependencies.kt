@@ -19,7 +19,7 @@ import java.util.Locale.US
 import kotlin.reflect.full.declaredMembers
 
 object Versions {
-  const val compose = "1.0.0-alpha12"
+  const val compose = "1.0.0-beta01"
   const val kotlin = "1.4.30"
 
   // This *is* actually used.
@@ -30,7 +30,7 @@ object Versions {
 
 @Suppress("unused")
 object Dependencies {
-  const val android_gradle_plugin = "com.android.tools.build:gradle:7.0.0-alpha07"
+  const val android_gradle_plugin = "com.android.tools.build:gradle:7.0.0-alpha08"
 
   object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.1.0"
