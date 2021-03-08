@@ -19,7 +19,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -48,7 +48,7 @@ val TextInputViewFactory = composedViewFactory<Rendering> { rendering, _ ->
         value = rendering.text,
         onValueChange = rendering.onTextChanged
     )
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.requiredHeight(8.dp))
     Button(onClick = rendering.onSwapText) {
       Text("Swap")
     }

@@ -18,7 +18,7 @@
 package com.squareup.workflow.ui.compose.tooling
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -120,14 +120,14 @@ class PreviewComposeWorkflowTest {
   @Preview @Composable private fun ParentWithModifier() {
     ParentWithOneChild.preview(
         Pair("one", "two"),
-        modifier = Modifier.size(0.dp)
+        modifier = Modifier.requiredSize(0.dp)
     )
   }
 
   @Preview @Composable private fun ParentWithPlaceholderModifier() {
     ParentWithOneChild.preview(
         Pair("one", "two"),
-        placeholderModifier = Modifier.size(0.dp)
+        placeholderModifier = Modifier.requiredSize(0.dp)
     )
   }
 

@@ -21,7 +21,7 @@ import android.view.View
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
@@ -102,7 +102,7 @@ import com.squareup.sample.R.string
   // though they're graphically scaled down.
   Box(
       modifier = Modifier
-          .height(previewHeight)
+          .requiredHeight(previewHeight)
           .aspectRatio(screenRatio)
           .onGloballyPositioned(onPreviewCoordinates)
   ) {
@@ -118,7 +118,7 @@ import com.squareup.sample.R.string
                 // Measure/layout the child at full screen size, and then just scale the pixels
                 // down. This way all the text and other density-dependent things get scaled
                 // correctly too.
-                .height(configuration.screenHeightDp.dp)
+                .requiredHeight(configuration.screenHeightDp.dp)
                 .width(configuration.screenWidthDp.dp)
                 .graphicsLayer(scaleX = scale, scaleY = scale)
         ) {
