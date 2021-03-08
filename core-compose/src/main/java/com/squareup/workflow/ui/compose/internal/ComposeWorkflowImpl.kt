@@ -64,18 +64,18 @@ internal class ComposeWorkflowImpl<PropsT, OutputT : Any>(
   }
 
   override fun render(
-    props: PropsT,
-    state: State<PropsT, OutputT>,
+    renderProps: PropsT,
+    renderState: State<PropsT, OutputT>,
     context: RenderContext
   ): ComposeRendering {
     // The first render pass needs to cache the sink. The sink is reusable, so we can just pass the
     // same one every time.
-    if (state.sinkHolder.sink == null) {
-      state.sinkHolder.sink = context.actionSink.contraMap(::forwardOutput)
+    if (renderState.sinkHolder.sink == null) {
+      renderState.sinkHolder.sink = context.actionSink.contraMap(::forwardOutput)
     }
 
     // onPropsChanged will ensure the rendering is re-composed when the props changes.
-    return state.rendering
+    return renderState.rendering
   }
 
   // Compiler bug doesn't let us call Snapshot.EMPTY.

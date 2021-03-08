@@ -25,7 +25,7 @@ object Versions {
   // This *is* actually used.
   @Suppress("unused")
   const val targetSdk = 30
-  const val workflow = "1.0.0-alpha.9"
+  const val workflow = "1.0.0-alpha.10"
 }
 
 @Suppress("unused")
